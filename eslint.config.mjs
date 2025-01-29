@@ -17,7 +17,9 @@ const eslintConfig = [
   ),
   {
     files: ['**/*.ts', '**/*.tsx, **/*.js', '**/*.jsx'],
-    ignores: ['.next/'],
+  },
+  {
+    ignores: ['.next/', 'docs/'],
   },
 ];
 
