@@ -8,8 +8,29 @@ on:
 # ワークフローで行う処理を定義する
 jobs:
   # 処理の名前を定義
-  build:
+  my_build:
     # 実行環境や諸々の設定を定義
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    # 実際に行う処理のステップを記載
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  # 実際に行う処理のステップを記載
+      # Node.jsのセットアップ
+      - uses: actions/setup-node@v2
+        with:
+          # volta.nodeを参照
+          node-version-file: package.json
+
+      # node modulesのインストール
+      - name: npm install
+        run: npm ci
+
+      # ビルドの実行
+      - name: next build
+        run: npm run build
