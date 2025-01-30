@@ -4,6 +4,8 @@ name: check build
 # ワークフローの実行方法を定義する
 on:
   pull_request:
+    # types:
+    #   - opened
 
 # ワークフローで行う処理を定義する
 jobs:
